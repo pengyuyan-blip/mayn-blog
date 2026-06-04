@@ -3,133 +3,244 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mayn's Blog — 生活·思考·记录</title>
+<title>Mayn · 投放人·运动人·游戏人</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --pink: #ff6b9d;
+    --orange: #ffa552;
+    --blue: #4ecdc4;
+    --purple: #a855f7;
+    --bg: #0f0f1a;
+    --card: #1a1a2e;
+    --text: #e8e8f0;
+    --muted: #8888aa;
+  }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', 'PingFang SC', sans-serif;
-    background: #fdf8f0;
-    color: #3a3a3a;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
     line-height: 1.8;
+    overflow-x: hidden;
   }
 
-  /* ===== Nav ===== */
-  nav {
-    background: #fff;
-    border-bottom: 1px solid #f0e6d8;
-    padding: 0 40px;
-    position: sticky; top:0; z-index:10;
+  /* ===== Animated BG ===== */
+  .bg-orbs {
+    position: fixed; top:0; left:0; width:100%; height:100%;
+    z-index: 0; pointer-events: none; overflow: hidden;
   }
-  .nav-inner {
-    max-width: 900px; margin: 0 auto;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 64px;
+  .bg-orbs span {
+    position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.3;
+    animation: float 20s infinite ease-in-out;
   }
-  .logo { font-size: 20px; font-weight: 700; color: #c47a3a; letter-spacing: 1px; }
-  .nav-links { display:flex; gap:28px; list-style:none; }
-  .nav-links a { text-decoration:none; color:#888; font-size:14px; transition:color .2s }
-  .nav-links a:hover { color:#c47a3a }
-  .nav-links .active { color:#c47a3a; font-weight:600 }
-
-  /* ===== Hero ===== */
-  .hero {
-    background: linear-gradient(135deg, #f7e8d8 0%, #fdf3e8 40%, #fff5ec 100%);
-    padding: 80px 40px 60px;
-    text-align: center;
-  }
-  .hero-inner { max-width: 700px; margin: 0 auto; }
-  .avatar {
-    width: 96px; height: 96px; border-radius: 50%;
-    background: linear-gradient(135deg, #e8b87a, #c47a3a);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 36px; color: #fff; font-weight: 700;
-    margin: 0 auto 20px;
-    box-shadow: 0 4px 20px rgba(196,122,58,0.25);
-  }
-  .hero h1 { font-size: 32px; font-weight: 800; color: #3a2a1a; margin-bottom: 8px; }
-  .hero p { font-size: 15px; color: #a08060; line-height: 1.7; }
-  .hero-tags { margin-top: 18px; display: flex; gap:10px; justify-content: center; flex-wrap:wrap; }
-  .tag {
-    background: #fff; border: 1px solid #f0e0cc; border-radius: 20px;
-    padding: 5px 16px; font-size: 12px; color: #a08060;
+  .bg-orbs span:nth-child(1) { width:500px;height:500px;background:var(--pink);top:-10%;left:-10%;animation-delay:0s; }
+  .bg-orbs span:nth-child(2) { width:400px;height:400px;background:var(--blue);top:50%;right:-10%;animation-delay:-7s; }
+  .bg-orbs span:nth-child(3) { width:350px;height:350px;background:var(--purple);bottom:-10%;left:30%;animation-delay:-14s; }
+  .bg-orbs span:nth-child(4) { width:300px;height:300px;background:var(--orange);top:20%;left:60%;animation-delay:-3s; }
+  @keyframes float {
+    0%,100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(40px,-30px) scale(1.1); }
+    66% { transform: translate(-20px,40px) scale(0.95); }
   }
 
   /* ===== Layout ===== */
-  .main { max-width: 900px; margin: 0 auto; padding: 48px 40px 80px; }
+  .rel { position: relative; z-index: 1; }
 
-  /* ===== Section Title ===== */
+  /* ===== Nav ===== */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    background: rgba(15,15,26,0.85); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 0 40px;
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .logo {
+    font-size: 22px; font-weight: 800;
+    background: linear-gradient(135deg, var(--pink), var(--orange), var(--blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-links { display:flex; gap:32px; list-style:none; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted); font-size: 14px;
+    transition: color .2s; position: relative;
+  }
+  .nav-links a:hover, .nav-links a.active { color: #fff; }
+  .nav-links a.active::after {
+    content:''; position:absolute; bottom:-4px; left:0; right:0;
+    height:2px; background: linear-gradient(90deg,var(--pink),var(--orange)); border-radius:2px;
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 120px 40px 80px; text-align: center;
+  }
+  .hero-inner { max-width: 700px; }
+  .avatar-ring {
+    width: 120px; height: 120px; margin: 0 auto 28px;
+    border-radius: 50%; padding: 4px;
+    background: linear-gradient(135deg, var(--pink), var(--orange), var(--blue), var(--purple));
+    animation: ring-rotate 4s linear infinite;
+  }
+  @keyframes ring-rotate {
+    to { filter: hue-rotate(360deg); }
+  }
+  .avatar-inner {
+    width: 100%; height: 100%; border-radius: 50%;
+    background: linear-gradient(135deg, #2a1a3a, #1a1a2e);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 44px; border: 3px solid var(--bg);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 48px); font-weight: 900;
+    line-height: 1.2; margin-bottom: 16px;
+  }
+  .gradient-text {
+    background: linear-gradient(135deg, var(--pink), var(--orange), var(--blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p { color: var(--muted); font-size: 16px; line-height: 1.8; margin-bottom: 32px; }
+  .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    padding: 12px 28px; border-radius: 50px; font-size: 14px; font-weight: 600;
+    cursor: pointer; border: none; transition: transform .2s, box-shadow .2s;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: #fff; box-shadow: 0 4px 20px rgba(255,107,157,0.3);
+  }
+  .btn-outline {
+    background: transparent; color: var(--text);
+    border: 1.5px solid rgba(255,255,255,0.15);
+  }
+  .btn-outline:hover { border-color: var(--pink); }
+
+  /* ===== Section ===== */
+  .section { padding: 80px 40px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--pink); margin-bottom: 8px;
+  }
   .section-title {
-    font-size: 13px; font-weight: 600; letter-spacing: 3px;
-    color: #c47a3a; text-transform: uppercase;
-    margin-bottom: 24px; display: flex; align-items: center; gap:10px;
+    font-size: clamp(22px, 3.5vw, 32px); font-weight: 800; margin-bottom: 40px;
   }
-  .section-title::after { content:''; flex:1; height:1px; background:#f0e0cc; }
 
-  /* ===== Blog Cards ===== */
-  .blog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 56px; }
+  /* ===== Post Cards ===== */
+  .post-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .post-card {
-    background: #fff; border-radius: 14px; overflow: hidden;
-    border: 1px solid #f0e6d8;
-    transition: transform .2s, box-shadow .2s; cursor: pointer;
+    background: var(--card); border-radius: 20px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: transform .25s, box-shadow .25s; cursor: pointer;
+    position: relative;
   }
-  .post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(196,122,58,0.1); }
-  .post-thumb {
-    height: 160px; padding: 28px;
-    display: flex; align-items: flex-end;
-    font-size: 28px; line-height: 1.2; font-weight: 700; color: #fff;
+  .post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
   }
-  .post-body { padding: 20px 24px 24px; }
-  .post-meta { font-size: 12px; color: #b8a898; margin-bottom: 8px; }
-  .post-title { font-size: 17px; font-weight: 700; color: #3a2a1a; margin-bottom: 8px; line-height: 1.5; }
-  .post-excerpt { font-size: 13px; color: #888; line-height: 1.7; }
-  .post-tag {
-    display: inline-block; margin-top: 12px;
-    background: #fdf3e8; color: #c47a3a; font-size: 11px;
-    padding: 3px 10px; border-radius: 10px; font-weight: 600;
+  .post-banner {
+    height: 140px; padding: 24px; display: flex; flex-direction: column; justify-content: flex-end;
+    position: relative; overflow: hidden;
   }
+  .post-banner::before {
+    content:''; position:absolute; inset:0;
+    background: inherit; filter: brightness(0.7);
+  }
+  .post-banner * { position: relative; z-index: 1; }
+  .post-badge {
+    display: inline-block; background: rgba(255,255,255,0.2); backdrop-filter: blur(8px);
+    color:#fff; font-size: 11px; font-weight: 600; padding: 3px 10px;
+    border-radius: 20px; margin-bottom: 8px; width: fit-content;
+  }
+  .post-banner h3 { color:#fff; font-size: 18px; font-weight: 700; line-height: 1.4; }
+  .post-info { padding: 20px 24px 24px; }
+  .post-meta { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .post-excerpt { font-size: 13px; color: #aaaacc; line-height: 1.7; }
+  .post-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
+  .read-more { font-size: 13px; font-weight: 600; color: var(--pink); text-decoration: none; }
+  .post-likes { font-size: 12px; color: var(--muted); }
 
-  /* ===== Sidebar (inline) ===== */
-  .aside-card {
-    background: #fff; border-radius: 14px; padding: 28px;
-    border: 1px solid #f0e6d8; margin-bottom: 24px;
+  /* ===== About ===== */
+  .about-grid { display: grid; grid-template-columns: 280px 1fr; gap: 40px; align-items: start; }
+  .about-sidebar { position: sticky; top: 100px; }
+  .about-avatar-big {
+    width: 100%; aspect-ratio: 1; border-radius: 24px;
+    background: linear-gradient(135deg, var(--pink), var(--orange), var(--blue));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 72px; color: #fff; font-weight: 800;
+    margin-bottom: 20px;
   }
-  .aside-title { font-size: 14px; font-weight: 700; color: #3a2a1a; margin-bottom: 16px; }
-  .tag-cloud { display: flex; gap:8px; flex-wrap:wrap; }
-  .tag-cloud span {
-    background: #fdf3e8; color: #a07040; font-size: 12px;
-    padding: 5px 14px; border-radius: 16px; cursor: pointer; transition: background .2s;
+  .social-links { display: flex; gap: 10px; }
+  .social-link {
+    width: 40px; height: 40px; border-radius: 12px;
+    background: var(--card); border: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); text-decoration: none; font-size: 16px;
+    transition: border-color .2s, color .2s;
   }
-  .tag-cloud span:hover { background: #f7e0c8; }
-  .recent-item { padding: 10px 0; border-bottom: 1px solid #faf5ee; }
-  .recent-item:last-child { border: none; }
-  .recent-item a { text-decoration: none; color: #5a4a3a; font-size: 13px; }
-  .recent-item a:hover { color: #c47a3a; }
-  .recent-date { font-size: 11px; color: #b8a898; margin-top: 2px; }
+  .social-link:hover { border-color: var(--pink); color: var(--pink); }
+  .about-text p { color: #aaaacc; font-size: 14px; line-height: 2; margin-bottom: 16px; }
+  .about-text strong { color: var(--text); }
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(255,107,157,0.1), rgba(78,205,196,0.1));
+    border: 1px solid rgba(255,107,157,0.15);
+    border-radius: 16px; padding: 20px; margin-top: 24px;
+  }
+  .highlight-box p { margin: 0; color: var(--pink); font-weight: 600; font-size: 14px; }
 
   /* ===== Footer ===== */
   footer {
-    background: #3a2a1a; color: #b89870; text-align: center;
-    padding: 40px; font-size: 13px; line-height: 2;
+    text-align: center; padding: 48px 40px; border-top: 1px solid rgba(255,255,255,0.06);
+    color: var(--muted); font-size: 13px; line-height: 2; position: relative; z-index: 1;
   }
-  footer a { color: #e8b87a; text-decoration: none; }
+  footer a { color: var(--pink); text-decoration: none; }
+
+  /* ===== Tags ===== */
+  .tag-pill {
+    display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    margin: 4px; cursor: pointer; transition: transform .2s;
+  }
+  .tag-pill:hover { transform: scale(1.05); }
+  .tag-pink { background: rgba(255,107,157,0.15); color: var(--pink); }
+  .tag-orange { background: rgba(255,165,82,0.15); color: var(--orange); }
+  .tag-blue { background: rgba(78,205,196,0.15); color: var(--blue); }
+  .tag-purple { background: rgba(168,85,247,0.15); color: var(--purple); }
 
   /* ===== Responsive ===== */
-  @media (max-width: 700px) {
-    .blog-grid { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 24px; }
+  @media (max-width: 768px) {
+    .post-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-sidebar { position: static; }
     nav { padding: 0 20px; }
-    .main { padding: 32px 20px 60px; }
+    .section { padding: 60px 20px; }
+    .hero { padding: 120px 20px 60px; }
   }
+
+  /* ===== Scroll animation ===== */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s, transform .6s; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
 
+<!-- Animated BG -->
+<div class="bg-orbs">
+  <span></span><span></span><span></span><span></span>
+</div>
+
 <!-- Nav -->
-<nav>
+<nav class="rel">
   <div class="nav-inner">
-    <div class="logo">Mayn's Blog</div>
+    <div class="logo">Mayn</div>
     <ul class="nav-links">
-      <li><a href="#" class="active">首页</a></li>
+      <li><a href="#home" class="active">首页</a></li>
       <li><a href="#posts">文章</a></li>
       <li><a href="#about">关于</a></li>
       <li><a href="#contact">联系</a></li>
@@ -138,135 +249,156 @@
 </nav>
 
 <!-- Hero -->
-<section class="hero">
+<section class="hero rel" id="home">
   <div class="hero-inner">
-    <div class="avatar">M</div>
-    <h1>生活 · 思考 · 记录</h1>
-    <p>在这里记录广告投放的点滴、电商运营的实战，<br>偶尔也聊聊生活里的有趣发现。</p>
-    <div class="hero-tags">
-      <span class="tag">#Meta 广告</span>
-      <span class="tag">#Shopify</span>
-      <span class="tag">#数据分析</span>
-      <span class="tag">#生活随笔</span>
+    <div class="avatar-ring">
+      <div class="avatar-inner">M</div>
+    </div>
+    <h1>嗨，我是 <span class="gradient-text">Mayn</span></h1>
+    <p>白天跟 ROAS 死磕，晚上抱着手柄打游戏，<br>偶尔换上跑鞋刷 10 公里。<br>朋友都说我长得像彭于晏 —— 欢迎当面验证。</p>
+    <div class="hero-btns">
+      <a href="#posts" class="btn btn-primary">📖 读我的文章</a>
+      <a href="#about" class="btn btn-outline">👤 认识我</a>
     </div>
   </div>
 </section>
 
-<!-- Main -->
-<div class="main">
+<!-- Latest Posts -->
+<div class="section rel" id="posts">
+  <div class="section-label reveal">Blog Posts</div>
+  <div class="section-title reveal">最新文章</div>
+  <div class="post-grid">
 
-  <!-- About Me -->
-  <div class="section-title" id="about">关于我</div>
-  <div style="display:flex; gap:28px; align-items:flex-start; margin-bottom:48px; background:#fff; border-radius:14px; padding:32px; border:1px solid #f0e6d8; flex-wrap:wrap;">
-    <div style="flex-shrink:0;">
-      <div style="width:90px; height:90px; border-radius:50%; background:linear-gradient(135deg,#e8b87a,#c47a3a); display:flex; align-items:center; justify-content:center; font-size:32px; color:#fff; font-weight:700; box-shadow:0 4px 20px rgba(196,122,58,0.25);">M</div>
-    </div>
-    <div style="flex:1; min-width:250px;">
-      <p style="font-size:14px; color:#5a4a3a; line-height:2; margin:0;">
-        一个把「带货」写进DNA的效果营销人。<br>
-        白天跟ROAS死磕，跟流量博弈，帮品牌把钱花在刀刃上。<br>
-        晚上换上跑鞋刷个10公里，或者抱着手柄在虚拟世界里大杀四方。<br><br>
-        朋友都说我长得像彭于晏——对此我只想说，请当面验证。<br>
-        毕竟照片可以P，但本人的魅力，你得亲自来感受。<br><br>
-        <strong style="color:#c47a3a;">⚠️ 警告：关注本博客可能导致以下副作用——</strong><br>
-        被广告投放干货冲击、被运动打卡激励、以及，爱上我。
-      </p>
-      <div style="margin-top:12px; display:flex; gap:12px;">
-        <a href="#" style="color:#c47a3a; font-size:13px; text-decoration:none;">GitHub →</a>
-        <a href="#" style="color:#c47a3a; font-size:13px; text-decoration:none;">Twitter →</a>
-        <a href="#" style="color:#c47a3a; font-size:13px; text-decoration:none;">Email →</a>
+    <div class="post-card reveal">
+      <div class="post-banner" style="background:linear-gradient(135deg,#ff6b9d,#ff8fb1)">
+        <span class="post-badge">🔥 热门</span>
+        <h3>ROAS 2.0 是怎么炼成的</h3>
       </div>
-    </div>
-  </div>
-
-  <!-- Latest Posts -->
-  <div class="section-title">最新文章</div>
-  <div class="blog-grid">
-
-    <div class="post-card">
-      <div class="post-thumb" style="background:linear-gradient(135deg,#e8a060,#c47a3a)">
-        ROAS 2.0 是怎么炼成的
-      </div>
-      <div class="post-body">
-        <div class="post-meta">2026年6月 · 12 分钟阅读</div>
-        <div class="post-title">ROAS 2.0 是怎么炼成的——Meta 广告优化实录</div>
-        <div class="post-excerpt">从 1.7 到 2.33，记录一次完整的广告账户诊断与优化过程，含 BigQuery 数据验证方法...</div>
-        <span class="post-tag">广告投放</span>
+      <div class="post-info">
+        <div class="post-meta">📅 2026年6月 · ⏱️ 12 分钟阅读</div>
+        <div class="post-excerpt">从 1.7 到 2.33，完整记录一次 Meta 广告账户诊断与优化过程，含 BigQuery 数据验证方法......</div>
+        <div class="post-footer">
+          <a href="#" class="read-more">阅读全文 →</a>
+          <span class="post-likes">❤️ 42</span>
+        </div>
       </div>
     </div>
 
-    <div class="post-card">
-      <div class="post-thumb" style="background:linear-gradient(135deg,#6a9e7a,#3a7a5a)">
-        Shopify × BigQuery
+    <div class="post-card reveal">
+      <div class="post-banner" style="background:linear-gradient(135deg,#4ecdc4,#6ef0e8)">
+        <span class="post-badge">📊 数据</span>
+        <h3>Shopify × BigQuery<br>多店铺分析实战</h3>
       </div>
-      <div class="post-body">
-        <div class="post-meta">2026年5月 · 8 分钟阅读</div>
-        <div class="post-title">用 BigQuery 打通 Shopify 数据——多店铺分析实战</div>
+      <div class="post-info">
+        <div class="post-meta">📅 2026年5月 · ⏱️ 8 分钟阅读</div>
         <div class="post-excerpt">两个品牌、四张表、一套 RFM 模型，如何构建统一的电商数据分析体系...</div>
-        <span class="post-tag">数据分析</span>
+        <div class="post-footer">
+          <a href="#" class="read-more">阅读全文 →</a>
+          <span class="post-likes">❤️ 28</span>
+        </div>
       </div>
     </div>
 
-    <div class="post-card">
-      <div class="post-thumb" style="background:linear-gradient(135deg,#8a6abe,#6a4a9e)">
-        EDM 自动化
+    <div class="post-card reveal">
+      <div class="post-banner" style="background:linear-gradient(135deg,#a855f7,#c084fc)">
+        <span class="post-badge">⚡ 自动化</span>
+        <h3>Klaviyo + WorkBuddy<br>零人工 EDM 实践</h3>
       </div>
-      <div class="post-body">
-        <div class="post-meta">2026年5月 · 10 分钟阅读</div>
-        <div class="post-title">Klaviyo + WorkBuddy：零人工 EDM 自动化实践</div>
+      <div class="post-info">
+        <div class="post-meta">📅 2026年5月 · ⏱️ 10 分钟阅读</div>
         <div class="post-excerpt">从 RFM 分群到 AI 生成邮件模板，搭建一套全自动化 EDM 发送流水线...</div>
-        <span class="post-tag">自动化</span>
+        <div class="post-footer">
+          <a href="#" class="read-more">阅读全文 →</a>
+          <span class="post-likes">❤️ 35</span>
+        </div>
       </div>
     </div>
 
-    <div class="post-card">
-      <div class="post-thumb" style="background:linear-gradient(135deg,#c47a88,#a45a6a)">
-        生活碎片
+    <div class="post-card reveal">
+      <div class="post-banner" style="background:linear-gradient(135deg,#ffa552,#ffc978)">
+        <span class="post-badge">✨ 生活</span>
+        <h3>效率工具推荐<br>我每天在用的 5 个 AI 工具</h3>
       </div>
-      <div class="post-body">
-        <div class="post-meta">2026年4月 · 3 分钟阅读</div>
-        <div class="post-title">效率工具推荐：我每天在用的 5 个 AI 工具</div>
+      <div class="post-info">
+        <div class="post-meta">📅 2026年4月 · ⏱️ 3 分钟阅读</div>
         <div class="post-excerpt">WorkBuddy、Notion AI、Cursor... 聊聊这些工具如何改变我的工作流...</div>
-        <span class="post-tag">生活随笔</span>
+        <div class="post-footer">
+          <a href="#" class="read-more">阅读全文 →</a>
+          <span class="post-likes">❤️ 56</span>
+        </div>
       </div>
     </div>
 
   </div>
+</div>
 
-  <!-- Aside widgets -->
-  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px; margin-bottom:56px;">
-    <div class="aside-card">
-      <div class="aside-title">🏷️ 标签云</div>
-      <div class="tag-cloud">
-        <span>Meta 广告</span><span>Shopify</span><span>BigQuery</span>
-        <span>RFM 分析</span><span>EDM</span><span>Klaviyo</span>
-        <span>数据可视化</span><span>自动化</span><span>生活随笔</span>
+<!-- Tags -->
+<div class="section rel" style="padding-top:0;">
+  <div class="section-label reveal">Topics</div>
+  <div class="section-title reveal">标签云</div>
+  <div class="reveal">
+    <span class="tag-pill tag-pink"># Meta 广告</span>
+    <span class="tag-pill tag-orange"># Shopify</span>
+    <span class="tag-pill tag-blue"># BigQuery</span>
+    <span class="tag-pill tag-purple"># RFM 分析</span>
+    <span class="tag-pill tag-pink"># EDM</span>
+    <span class="tag-pill tag-orange"># Klaviyo</span>
+    <span class="tag-pill tag-blue"># 数据可视化</span>
+    <span class="tag-pill tag-purple"># 自动化</span>
+    <span class="tag-pill tag-pink"># 生活随笔</span>
+    <span class="tag-pill tag-orange"># 游戏</span>
+    <span class="tag-pill tag-blue"># 跑步</span>
+  </div>
+</div>
+
+<!-- About -->
+<div class="section rel" id="about">
+  <div class="section-label reveal">About Me</div>
+  <div class="section-title reveal">关于我</div>
+  <div class="about-grid">
+    <div class="about-sidebar reveal">
+      <div class="about-avatar-big">M</div>
+      <div class="social-links">
+        <a href="#" class="social-link" title="GitHub">⚙️</a>
+        <a href="#" class="social-link" title="Twitter">🐦</a>
+        <a href="#" class="social-link" title="Email">📧</a>
+        <a href="#" class="social-link" title="RSS">📡</a>
       </div>
     </div>
-    <div class="aside-card">
-      <div class="aside-title">📌 近期更新</div>
-      <div class="recent-item">
-        <a href="#">ROAS 2.0 是怎么炼成的</a>
-        <div class="recent-date">2026-06-02</div>
-      </div>
-      <div class="recent-item">
-        <a href="#">Shopify × BigQuery 多店铺分析</a>
-        <div class="recent-date">2026-05-18</div>
-      </div>
-      <div class="recent-item">
-        <a href="#">Klaviyo EDM 自动化实践</a>
-        <div class="recent-date">2026-05-05</div>
+    <div class="about-text reveal">
+      <p>一个把「带货」写进 DNA 的效果营销人。</p>
+      <p>白天跟 <strong>ROAS</strong> 死磕，跟流量博弈，帮品牌把钱花在刀刃上。管理 VyblooJug（保温杯）和 JelriSoFit（医疗服）两个品牌的广告账户，每天在数据里找答案。</p>
+      <p>晚上换上跑鞋刷个 <strong>10 公里</strong>，或者抱着手柄在虚拟世界里大杀四方。运动让我保持清醒，游戏让我保持好奇。</p>
+      <p>朋友都说我长得像 <strong>彭于晏</strong> —— 对此我只想说，请当面验证。毕竟照片可以 P，但本人的魅力，你得亲自来感受。</p>
+      <div class="highlight-box">
+        <p>⚠️ 警告：关注本博客可能导致以下副作用 —— 被广告投放干货冲击、被运动打卡激励、以及，爱上我。</p>
       </div>
     </div>
   </div>
-
 </div>
 
 <!-- Footer -->
-<footer>
-  <p>© 2026 Mayn's Blog · 用 ❤️ 和 ☕ 驱动</p>
-  <p><a href="#">RSS</a> · <a href="#">GitHub</a> · <a href="#">联系我</a></p>
+<footer class="rel">
+  <p>© 2026 <strong>Mayn</strong> · 用 ❤️ 和 ☕ 驱动</p>
+  <p><a href="#">GitHub</a> · <a href="#">Twitter</a> · <a href="#">联系我</a> · <a href="#">RSS</a></p>
 </footer>
 
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Nav active state
+  const links = document.querySelectorAll('.nav-links a');
+  links.forEach(a => {
+    a.addEventListener('click', () => {
+      links.forEach(l => l.classList.remove('active'));
+      a.classList.add('active');
+    });
+  });
+</script>
 </body>
 </html>
